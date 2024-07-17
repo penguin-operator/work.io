@@ -1,8 +1,8 @@
-from typing import Optional
+from typing import Literal
 from pydantic import BaseModel
 
 class User(BaseModel):
     username: str
     password: str
-    description: Optional[str] = None
-    role: Optional[str] = None
+    description: str | None = None
+    role: Literal['orderer', 'worker']
