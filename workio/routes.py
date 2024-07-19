@@ -1,4 +1,3 @@
-import hashlib
 from fastapi import FastAPI, Request
 from database import Database, User, Work, Response
 
@@ -9,8 +8,7 @@ db = Database()
 async def add_user(user: User) -> dict[str, str | User]:
     if db.get_user(user.username):
         return { "status": "error", "message": "User already exists", }
-    password = hashlib.sha256(user.password.encode()).hexdigest()
-    db.add_user(user.username, password, user.description or "", user.role or "orderer")
+    db.add_user(user.username, user.password, user.description or "", user.role or "orderer")
     return { "status": "ok", "user": user, }
 
 @app.get('/user')
